@@ -1,218 +1,102 @@
+// Game.js
+
+// Variáveis globais
+let cartas = [];
+let jogador = {};
+let computador = {};
+
+// Funções de inicialização
+function inicializarJogo() {
+  // Inicializa as cartas
+  cartas.push(new Carta("Rei", "Coração"));
+  cartas.push(new Carta("Dama", "Paus"));
+  // ...
+}
+
+// Funções de gestão das cartas
+function sortearCarta() {
+  // Sorteia uma carta aleatória e a retorna
+  let cartaSorteada = cartas[Math.floor(Math.random() * cartas.length)];
+  return cartaSorteada;
+}
+
+// Funções de lógica do jogo
+function verificarVencedor(cartaJogada, cartaComputador) {
+  // Verifica se o jogador ganhou ou perdeu a partida
+  if (cartaJogada.valor > cartaComputador.valor) {
+    return true; // Jogador venceu
+  } else {
+    return false; // Jogador perdeu
+  }
+}
+
+// Funções de renderização do jogo
+function renderizarCartas(cartas) {
+  // Renderiza as cartas na página
+  let cartaElement = document.getElementById("carta");
+  cartaElement.textContent = cartas[0].nome;
+}
+```
+
+**Uso do Console F12**
+
+Para verificar se há algum erro, você pode usar o console do navegador (F12). Aqui estão algumas coisas que você pode fazer:
+
+* Verifique se há algum erro no console.
+* Use a função `console.log()` para imprimir mensagens de erro ou depuração.
+* Use a função `debugger` para pausar o código e verificar as variáveis.
+
+**Exemplo de Código**
+
+Aqui está um exemplo de como você pode usar essas estruturas e funções para criar um jogo de cartas simples:
+```html
+<!-- index.html -->
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Trunfo - Estádios</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #0d7a3d, #1a9c4e);
-            margin: 0; padding: 20px; text-align: center;
-            min-height: 100vh; color: white;
-        }
-        h1 { text-shadow: 2px 2px 4px #000; margin-bottom: 10px; }
-       .placar {
-            font-size: 22px; font-weight: bold; margin: 15px 0;
-            background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px;
-            display: inline-block;
-        }
-       .mesa {
-            display: flex; gap: 30px; justify-content: center;
-            flex-wrap: wrap; margin-top: 20px;
-        }
-       .carta {
-            background: white; color: black; border-radius: 15px;
-            padding: 15px; width: 260px; border: 5px solid #FFD700;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-        }
-       .carta-maquina { background: #444; color: #444; }
-       .carta-maquina h2,.carta-maquina.atributo { color: #444; }
-       .carta img {
-            width: 100%; height: 160px; object-fit: cover;
-            border-radius: 10px; border: 3px solid #0d7a3d;
-        }
-       .carta h2 { text-align: center; color: #0d7a3d; margin: 8px 0; }
-       .atributo {
-            background: #f0f0f0; padding: 10px; margin: 6px 0;
-            border-radius: 8px; cursor: pointer; border: 2px solid transparent;
-            transition: 0.2s;
-        }
-       .atributo:hover { background: #FFD700; border: 2px solid #0d7a3d; }
-       .atributo-maquina { cursor: default; }
-       .atributo-maquina:hover { background: #f0f0f0; border: 2px solid transparent; }
-        #resultado {
-            font-size: 26px; font-weight: bold; margin: 20px 0;
-            height: 35px; text-shadow: 2px 2px 4px #000;
-        }
-        button {
-            padding: 15px 30px; font-size: 18px; background: #FFD700;
-            border: none; border-radius: 8px; cursor: pointer;
-            font-weight: bold; margin: 10px;
-        }
-        button:hover { background: #ffed4e; }
-       .escondido { display: none; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Super Trunfo</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>⚽ SUPER TRUNFO - ESTÁDIOS ⚽</h1>
-    <div class="placar">
-        Você: <span id="placarJogador">0</span> | Máquina: <span id="placarMaquina">0</span>
-    </div>
-    
-    <div id="telaInicial">
-        <button onclick="iniciarJogo()">DISTRIBUIR CARTAS E JOGAR</button>
-    </div>
-
-    <div id="telaJogo" class="escondido">
-        <div class="mesa">
-            <div>
-                <h3>SUA CARTA</h3>
-                <div class="carta" id="cartaJogador"></div>
-            </div>
-            <div>
-                <h3>CARTA DA MÁQUINA</h3>
-                <div class="carta carta-maquina" id="cartaMaquina"></div>
-            </div>
-        </div>
-        <div id="resultado"></div>
-        <button id="btnProxima" class="escondido" onclick="proximaRodada()">PRÓXIMA RODADA</button>
-    </div>
-
-    <div id="telaFinal" class="escondido">
-        <h2 id="vencedorFinal"></h2>
-        <button onclick="iniciarJogo()">JOGAR DE NOVO</button>
-    </div>
-
-<script>
-    const baralho = [
-        { nome: "Maracanã", img: "foto.jpeg", capacidade: 78838, ano: 1950, publico: 199854 },
-        { nome: "Morumbi", img: "https://upload.wikimedia.org/wikipedia/commons/5/5f/Estadio_do_Morumbi.jpg", capacidade: 72039, ano: 1960, publico: 146082 },
-        { nome: "Mineirão", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Mineirao_Aereo.jpg/640px-Mineirao_Aereo.jpg", capacidade: 61846, ano: 1965, publico: 132834 },
-        { nome: "Beira-Rio", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Estadio_Beira_Rio_Porto_Alegre.jpg/640px-Estadio_Beira_Rio_Porto_Alegre.jpg", capacidade: 50842, ano: 1969, publico: 106554 }
-    ];
-
-    let cartasJogador = [], cartasMaquina = [];
-    let cartaAtualJogador, cartaAtualMaquina;
-    let suaVez = true;
-
-    function embaralhar(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-
-    function iniciarJogo() {
-        const baralhoEmbaralhado = embaralhar([...baralho]);
-        cartasJogador = baralhoEmbaralhado.slice(0, 2);
-        cartasMaquina = baralhoEmbaralhado.slice(2, 4);
-        suaVez = true;
-        
-        document.getElementById('telaInicial').classList.add('escondido');
-        document.getElementById('telaFinal').classList.add('escondido');
-        document.getElementById('telaJogo').classList.remove('escondido');
-        
-        atualizarPlacar();
-        proximaRodada();
-    }
-
-    function proximaRodada() {
-        document.getElementById('resultado').innerHTML = '';
-        document.getElementById('btnProxima').classList.add('escondido');
-        
-        if (cartasJogador.length === 0) return fimDeJogo('MÁQUINA VENCEU O JOGO! 🤖');
-        if (cartasMaquina.length === 0) return fimDeJogo('VOCÊ VENCEU O JOGO! 🏆');
-
-        cartaAtualJogador = cartasJogador[0];
-        cartaAtualMaquina = cartasMaquina[0];
-        
-        mostrarCarta('cartaJogador', cartaAtualJogador, true);
-        mostrarCarta('cartaMaquina', cartaAtualMaquina, false);
-        
-        if (!suaVez) setTimeout(jogadaMaquina, 1500);
-    }
-
-    function mostrarCarta(id, carta, visivel) {
-        const div = document.getElementById(id);
-        if (visivel) {
-            div.classList.remove('carta-maquina');
-            div.innerHTML = `
-                <img src="${carta.img}" alt="${carta.nome}">
-                <h2>${carta.nome}</h2>
-                <div class="atributo" onclick="jogar('capacidade')">Capacidade: ${carta.capacidade.toLocaleString()}</div>
-                <div class="atributo" onclick="jogar('ano')">Inauguração: ${carta.ano}</div>
-                <div class="atributo" onclick="jogar('publico')">Recorde Público: ${carta.publico.toLocaleString()}</div>
-            `;
-        } else {
-            div.classList.add('carta-maquina');
-            div.innerHTML = `
-                <img src="${carta.img}" alt="?">
-                <h2>???</h2>
-                <div class="atributo atributo-maquina">Capacidade:???</div>
-                <div class="atributo atributo-maquina">Inauguração:???</div>
-                <div class="atributo atributo-maquina">Recorde Público:???</div>
-            `;
-        }
-    }
-
-    function jogar(atributo) {
-        if (!suaVez) return;
-        comparar(atributo);
-    }
-
-    function jogadaMaquina() {
-        const atributos = ['capacidade', 'ano', 'publico'];
-        const escolha = atributos[Math.floor(Math.random() * 3)];
-        document.getElementById('resultado').innerHTML = `Máquina escolheu ${escolha}!`;
-        setTimeout(() => comparar(escolha), 1000);
-    }
-
-    function comparar(atributo) {
-        suaVez = false;
-        mostrarCarta('cartaMaquina', cartaAtualMaquina, true);
-        
-        let valorJogador = cartaAtualJogador[atributo];
-        let valorMaquina = cartaAtualMaquina[atributo];
-        let venceu;
-        
-        if (atributo === 'ano') {
-            venceu = valorJogador < valorMaquina;
-        } else {
-            venceu = valorJogador > valorMaquina;
-        }
-
-        if (venceu) {
-            document.getElementById('resultado').innerHTML = 'VOCÊ VENCEU A RODADA! 🏆';
-            cartasJogador.push(cartasJogador.shift());
-            cartasJogador.push(cartasMaquina.shift());
-            suaVez = true;
-        } else if (valorJogador === valorMaquina) {
-            document.getElementById('resultado').innerHTML = 'EMPATOU! 🤝';
-            cartasJogador.push(cartasJogador.shift());
-            cartasMaquina.push(cartasMaquina.shift());
-        } else {
-            document.getElementById('resultado').innerHTML = 'MÁQUINA VENCEU A RODADA 🤖';
-            cartasMaquina.push(cartasMaquina.shift());
-            cartasMaquina.push(cartasJogador.shift());
-            suaVez = false;
-        }
-        
-        atualizarPlacar();
-        document.getElementById('btnProxima').classList.remove('escondido');
-    }
-
-    function atualizarPlacar() {
-        document.getElementById('placarJogador').innerText = cartasJogador.length;
-        document.getElementById('placarMaquina').innerText = cartasMaquina.length;
-    }
-
-    function fimDeJogo(texto) {
-        document.getElementById('telaJogo').classList.add('escondido');
-        document.getElementById('telaFinal').classList.remove('escondido');
-        document.getElementById('vencedorFinal').innerText = texto;
-    }
-</script>
+  <div id="carta"></div>
+  <script src="game.js"></script>
 </body>
 </html>
+```
+
+```javascript
+// game.js
+
+let cartas = [];
+let jogador = {};
+let computador = {};
+
+function inicializarJogo() {
+  cartas.push(new Carta("Rei", "Coração"));
+  cartas.push(new Carta("Dama", "Paus"));
+}
+
+function sortearCarta() {
+  let cartaSorteada = cartas[Math.floor(Math.random() * cartas.length)];
+  return cartaSorteada;
+}
+
+function verificarVencedor(cartaJogada, cartaComputador) {
+  if (cartaJogada.valor > cartaComputador.valor) {
+    return true; // Jogador venceu
+  } else {
+    return false; // Jogador perdeu
+  }
+}
+
+function renderizarCartas(cartas) {
+  let cartaElement = document.getElementById("carta");
+  cartaElement.textContent = cartas[0].nome;
+}
+
+inicializarJogo();
+let cartaSorteada = sortearCarta();
+renderizarCartas([cartaSorteada]);
