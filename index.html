@@ -1,55 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Super Trunfo - Maracanã</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Trunfo - Estádios</title>
     <style>
-        body { 
-            font-family: Arial; 
-            background: #1a5d1a; 
-            text-align: center; 
-            padding: 20px;
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0d7a3d, #1a9c4e);
             margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
         }
+        h1 { color: white; text-shadow: 2px 2px 4px #000; }
+        .mesa { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; }
         .carta {
             background: white;
-            max-width: 320px;
-            margin: 20px auto;
-            padding: 20px;
             border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            border: 5px solid #ffcc00;
+            padding: 20px;
+            width: 280px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            border: 5px solid #FFD700;
         }
-        img {
+        .carta img {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
             border-radius: 10px;
-            margin-bottom: 15px;
+            border: 3px solid #0d7a3d;
         }
-        h1 { 
-            color: #0066cc; 
-            margin: 10px 0;
-            font-size: 24px;
-        }
+        .carta h2 { text-align: center; color: #0d7a3d; margin: 10px 0; }
         .atributo {
             background: #f0f0f0;
-            margin: 8px 0;
             padding: 10px;
+            margin: 8px 0;
             border-radius: 8px;
-            font-size: 16px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: 0.3s;
         }
-        .atributo b { color: #1a5d1a; }
+        .atributo:hover {
+            background: #FFD700;
+            border: 2px solid #0d7a3d;
+            transform: scale(1.05);
+        }
+        #resultado {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-shadow: 2px 2px 4px #000;
+            height: 30px;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background: #FFD700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        button:hover { background: #ffed4e; }
     </style>
 </head>
 <body>
-    <div class="carta">
-        <img src="foto.jpeg" alt="Estádio do Maracanã">
-        <h1>Estádio do Maracanã</h1>
-        <div class="atributo"><b>Capacidade:</b> 78.838</div>
-        <div class="atributo"><b>Inauguração:</b> 1950</div>
-        <div class="atributo"><b>Cidade:</b> Rio de Janeiro</div>
-        <div class="atributo"><b>Apelido:</b> O Templo do Futebol</div>
+    <h1>⚽ SUPER TRUNFO - ESTÁDIOS ⚽</h1>
+    <div class="mesa">
+        <div class="carta" id="carta1">
+            <img src="foto.jpeg" alt="Maracanã">
+            <h2>Maracanã</h2>
+            <div class="atributo" onclick="jogar('capacidade', 78838, 72039)">
+                <strong>Capacidade:</strong> 78.838
+            </div>
+            <div class="atributo" onclick="jogar('ano', 1950, 1960)">
+                <strong>Inauguração:</strong> 1950
+            </div>
+        </div>
+
+        <div class="carta" id="carta2">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Estadio_do_Morumbi.jpg/640px-Estadio_do_Morumbi.jpg" alt="Morumbi">
+            <h2>Morumbi</h2>
+            <div class="atributo">
+                <strong>Capacidade:</strong> 72.039
+            </div>
+            <div class="atributo">
+                <strong>Inauguração:</strong> 1960
+            </div>
+        </div>
     </div>
+    
+    <div id="resultado"></div>
+    <button onclick="resetar()">Jogar Novamente</button>
+
+    <script>
+        let jogou = false;
+        function jogar(tipo, valor1, valor2) {
+            if(jogou) return;
+            jogou = true;
+            let resultado = document.getElementById('resultado');
+            
+            if(tipo === 'capacidade') {
+                if(valor1 > valor2) {
+                    resultado.innerHTML = '🏆 MARACANÃ VENCEU! 🏆';
+                    resultado.style.color = '#FFD700';
+                } else {
+                    resultado.innerHTML = '🏆 MORUMBI VENCEU! 🏆';
+                    resultado.style.color = '#FFD700';
+                }
+            }
+            
+            if(tipo === 'ano') {
+                if(valor1 < valor2) {
+                    resultado.innerHTML = '🏆 MARACANÃ VENCEU! Mais antigo! 🏆';
+                    resultado.style.color = '#FFD700';
+                } else {
+                    resultado.innerHTML = '🏆 MORUMBI VENCEU! Mais antigo! 🏆';
+                    resultado.style.color = '#FFD700';
+                }
+            }
+        }
+        
+        function resetar() {
+            jogou = false;
+            document.getElementById('resultado').innerHTML = '';
+        }
+    </script>
 </body>
 </html>
