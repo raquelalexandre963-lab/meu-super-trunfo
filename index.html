@@ -8,128 +8,211 @@
         body {
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #0d7a3d, #1a9c4e);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            flex-direction: column;
+            margin: 0; padding: 20px; text-align: center;
+            min-height: 100vh; color: white;
         }
-        h1 { color: white; text-shadow: 2px 2px 4px #000; }
-        .mesa { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; }
-        .carta {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            width: 280px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-            border: 5px solid #FFD700;
+        h1 { text-shadow: 2px 2px 4px #000; margin-bottom: 10px; }
+       .placar {
+            font-size: 22px; font-weight: bold; margin: 15px 0;
+            background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px;
+            display: inline-block;
         }
-        .carta img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 3px solid #0d7a3d;
+       .mesa {
+            display: flex; gap: 30px; justify-content: center;
+            flex-wrap: wrap; margin-top: 20px;
         }
-        .carta h2 { text-align: center; color: #0d7a3d; margin: 10px 0; }
-        .atributo {
-            background: #f0f0f0;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 8px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: 0.3s;
+       .carta {
+            background: white; color: black; border-radius: 15px;
+            padding: 15px; width: 260px; border: 5px solid #FFD700;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
-        .atributo:hover {
-            background: #FFD700;
-            border: 2px solid #0d7a3d;
-            transform: scale(1.05);
+       .carta-maquina { background: #444; color: #444; }
+       .carta-maquina h2,.carta-maquina.atributo { color: #444; }
+       .carta img {
+            width: 100%; height: 160px; object-fit: cover;
+            border-radius: 10px; border: 3px solid #0d7a3d;
         }
+       .carta h2 { text-align: center; color: #0d7a3d; margin: 8px 0; }
+       .atributo {
+            background: #f0f0f0; padding: 10px; margin: 6px 0;
+            border-radius: 8px; cursor: pointer; border: 2px solid transparent;
+            transition: 0.2s;
+        }
+       .atributo:hover { background: #FFD700; border: 2px solid #0d7a3d; }
+       .atributo-maquina { cursor: default; }
+       .atributo-maquina:hover { background: #f0f0f0; border: 2px solid transparent; }
         #resultado {
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            margin-top: 20px;
-            text-shadow: 2px 2px 4px #000;
-            height: 30px;
+            font-size: 26px; font-weight: bold; margin: 20px 0;
+            height: 35px; text-shadow: 2px 2px 4px #000;
         }
         button {
-            padding: 12px 24px;
-            font-size: 18px;
-            background: #FFD700;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 20px;
-            font-weight: bold;
+            padding: 15px 30px; font-size: 18px; background: #FFD700;
+            border: none; border-radius: 8px; cursor: pointer;
+            font-weight: bold; margin: 10px;
         }
         button:hover { background: #ffed4e; }
+       .escondido { display: none; }
     </style>
 </head>
 <body>
     <h1>⚽ SUPER TRUNFO - ESTÁDIOS ⚽</h1>
-    <div class="mesa">
-        <div class="carta" id="carta1">
-            <img src="foto.jpeg" alt="Maracanã">
-            <h2>Maracanã</h2>
-            <div class="atributo" onclick="jogar('capacidade', 78838, 72039)">
-                <strong>Capacidade:</strong> 78.838
-            </div>
-            <div class="atributo" onclick="jogar('ano', 1950, 1960)">
-                <strong>Inauguração:</strong> 1950
-            </div>
-        </div>
-
-        <div class="carta" id="carta2">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Estadio_do_Morumbi.jpg/640px-Estadio_do_Morumbi.jpg" alt="Morumbi">
-            <h2>Morumbi</h2>
-            <div class="atributo">
-                <strong>Capacidade:</strong> 72.039
-            </div>
-            <div class="atributo">
-                <strong>Inauguração:</strong> 1960
-            </div>
-        </div>
+    <div class="placar">
+        Você: <span id="placarJogador">0</span> | Máquina: <span id="placarMaquina">0</span>
     </div>
     
-    <div id="resultado"></div>
-    <button onclick="resetar()">Jogar Novamente</button>
+    <div id="telaInicial">
+        <button onclick="iniciarJogo()">DISTRIBUIR CARTAS E JOGAR</button>
+    </div>
 
-    <script>
-        let jogou = false;
-        function jogar(tipo, valor1, valor2) {
-            if(jogou) return;
-            jogou = true;
-            let resultado = document.getElementById('resultado');
-            
-            if(tipo === 'capacidade') {
-                if(valor1 > valor2) {
-                    resultado.innerHTML = '🏆 MARACANÃ VENCEU! 🏆';
-                    resultado.style.color = '#FFD700';
-                } else {
-                    resultado.innerHTML = '🏆 MORUMBI VENCEU! 🏆';
-                    resultado.style.color = '#FFD700';
-                }
-            }
-            
-            if(tipo === 'ano') {
-                if(valor1 < valor2) {
-                    resultado.innerHTML = '🏆 MARACANÃ VENCEU! Mais antigo! 🏆';
-                    resultado.style.color = '#FFD700';
-                } else {
-                    resultado.innerHTML = '🏆 MORUMBI VENCEU! Mais antigo! 🏆';
-                    resultado.style.color = '#FFD700';
-                }
-            }
+    <div id="telaJogo" class="escondido">
+        <div class="mesa">
+            <div>
+                <h3>SUA CARTA</h3>
+                <div class="carta" id="cartaJogador"></div>
+            </div>
+            <div>
+                <h3>CARTA DA MÁQUINA</h3>
+                <div class="carta carta-maquina" id="cartaMaquina"></div>
+            </div>
+        </div>
+        <div id="resultado"></div>
+        <button id="btnProxima" class="escondido" onclick="proximaRodada()">PRÓXIMA RODADA</button>
+    </div>
+
+    <div id="telaFinal" class="escondido">
+        <h2 id="vencedorFinal"></h2>
+        <button onclick="iniciarJogo()">JOGAR DE NOVO</button>
+    </div>
+
+<script>
+    const baralho = [
+        { nome: "Maracanã", img: "foto.jpeg", capacidade: 78838, ano: 1950, publico: 199854 },
+        { nome: "Morumbi", img: "https://upload.wikimedia.org/wikipedia/commons/5/5f/Estadio_do_Morumbi.jpg", capacidade: 72039, ano: 1960, publico: 146082 },
+        { nome: "Mineirão", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Mineirao_Aereo.jpg/640px-Mineirao_Aereo.jpg", capacidade: 61846, ano: 1965, publico: 132834 },
+        { nome: "Beira-Rio", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Estadio_Beira_Rio_Porto_Alegre.jpg/640px-Estadio_Beira_Rio_Porto_Alegre.jpg", capacidade: 50842, ano: 1969, publico: 106554 }
+    ];
+
+    let cartasJogador = [], cartasMaquina = [];
+    let cartaAtualJogador, cartaAtualMaquina;
+    let suaVez = true;
+
+    function embaralhar(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function iniciarJogo() {
+        const baralhoEmbaralhado = embaralhar([...baralho]);
+        cartasJogador = baralhoEmbaralhado.slice(0, 2);
+        cartasMaquina = baralhoEmbaralhado.slice(2, 4);
+        suaVez = true;
+        
+        document.getElementById('telaInicial').classList.add('escondido');
+        document.getElementById('telaFinal').classList.add('escondido');
+        document.getElementById('telaJogo').classList.remove('escondido');
+        
+        atualizarPlacar();
+        proximaRodada();
+    }
+
+    function proximaRodada() {
+        document.getElementById('resultado').innerHTML = '';
+        document.getElementById('btnProxima').classList.add('escondido');
+        
+        if (cartasJogador.length === 0) return fimDeJogo('MÁQUINA VENCEU O JOGO! 🤖');
+        if (cartasMaquina.length === 0) return fimDeJogo('VOCÊ VENCEU O JOGO! 🏆');
+
+        cartaAtualJogador = cartasJogador[0];
+        cartaAtualMaquina = cartasMaquina[0];
+        
+        mostrarCarta('cartaJogador', cartaAtualJogador, true);
+        mostrarCarta('cartaMaquina', cartaAtualMaquina, false);
+        
+        if (!suaVez) setTimeout(jogadaMaquina, 1500);
+    }
+
+    function mostrarCarta(id, carta, visivel) {
+        const div = document.getElementById(id);
+        if (visivel) {
+            div.classList.remove('carta-maquina');
+            div.innerHTML = `
+                <img src="${carta.img}" alt="${carta.nome}">
+                <h2>${carta.nome}</h2>
+                <div class="atributo" onclick="jogar('capacidade')">Capacidade: ${carta.capacidade.toLocaleString()}</div>
+                <div class="atributo" onclick="jogar('ano')">Inauguração: ${carta.ano}</div>
+                <div class="atributo" onclick="jogar('publico')">Recorde Público: ${carta.publico.toLocaleString()}</div>
+            `;
+        } else {
+            div.classList.add('carta-maquina');
+            div.innerHTML = `
+                <img src="${carta.img}" alt="?">
+                <h2>???</h2>
+                <div class="atributo atributo-maquina">Capacidade:???</div>
+                <div class="atributo atributo-maquina">Inauguração:???</div>
+                <div class="atributo atributo-maquina">Recorde Público:???</div>
+            `;
+        }
+    }
+
+    function jogar(atributo) {
+        if (!suaVez) return;
+        comparar(atributo);
+    }
+
+    function jogadaMaquina() {
+        const atributos = ['capacidade', 'ano', 'publico'];
+        const escolha = atributos[Math.floor(Math.random() * 3)];
+        document.getElementById('resultado').innerHTML = `Máquina escolheu ${escolha}!`;
+        setTimeout(() => comparar(escolha), 1000);
+    }
+
+    function comparar(atributo) {
+        suaVez = false;
+        mostrarCarta('cartaMaquina', cartaAtualMaquina, true);
+        
+        let valorJogador = cartaAtualJogador[atributo];
+        let valorMaquina = cartaAtualMaquina[atributo];
+        let venceu;
+        
+        if (atributo === 'ano') {
+            venceu = valorJogador < valorMaquina;
+        } else {
+            venceu = valorJogador > valorMaquina;
+        }
+
+        if (venceu) {
+            document.getElementById('resultado').innerHTML = 'VOCÊ VENCEU A RODADA! 🏆';
+            cartasJogador.push(cartasJogador.shift());
+            cartasJogador.push(cartasMaquina.shift());
+            suaVez = true;
+        } else if (valorJogador === valorMaquina) {
+            document.getElementById('resultado').innerHTML = 'EMPATOU! 🤝';
+            cartasJogador.push(cartasJogador.shift());
+            cartasMaquina.push(cartasMaquina.shift());
+        } else {
+            document.getElementById('resultado').innerHTML = 'MÁQUINA VENCEU A RODADA 🤖';
+            cartasMaquina.push(cartasMaquina.shift());
+            cartasMaquina.push(cartasJogador.shift());
+            suaVez = false;
         }
         
-        function resetar() {
-            jogou = false;
-            document.getElementById('resultado').innerHTML = '';
-        }
-    </script>
+        atualizarPlacar();
+        document.getElementById('btnProxima').classList.remove('escondido');
+    }
+
+    function atualizarPlacar() {
+        document.getElementById('placarJogador').innerText = cartasJogador.length;
+        document.getElementById('placarMaquina').innerText = cartasMaquina.length;
+    }
+
+    function fimDeJogo(texto) {
+        document.getElementById('telaJogo').classList.add('escondido');
+        document.getElementById('telaFinal').classList.remove('escondido');
+        document.getElementById('vencedorFinal').innerText = texto;
+    }
+</script>
 </body>
 </html>
