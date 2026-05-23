@@ -1,55 +1,55 @@
-```html
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Meu Super Trunfo</title>
-  <style>
-    body {
-      background-color: #f2f2f2;
-    }
-    
-    #painel-de-controle {
-      width: 400px;
-      height: 200px;
-      margin: 20px auto;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
-    }
-    
-    #nome-do-jogador {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    
-    #pontuacao-total {
-      font-size: 18px;
-      color: #666;
-      margin-bottom: 10px;
-    }
-    
-    #nivel-atual {
-      font-size: 18px;
-      color: #666;
-      margin-bottom: 10px;
-    }
-    
-    #dificuldade-atual {
-      font-size: 18px;
-      color: #666;
-      margin-bottom: 10px;
-    }
-  </style>
+    <title>Super Trunfo - Maracanã</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { 
+            font-family: Arial; 
+            background: #1a5d1a; 
+            text-align: center; 
+            padding: 20px;
+            margin: 0;
+        }
+        .carta {
+            background: white;
+            max-width: 320px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 5px solid #ffcc00;
+        }
+        img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        h1 { 
+            color: #0066cc; 
+            margin: 10px 0;
+            font-size: 24px;
+        }
+        .atributo {
+            background: #f0f0f0;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .atributo b { color: #1a5d1a; }
+    </style>
 </head>
 <body>
-  <div id="painel-de-controle">
-    <h1 id="nome-do-jogador">Nome do Jogador</h1>
-    <p id="pontuacao-total">Pontuação Total: 0 pontos</p>
-    <p id="nivel-atual">Nível Atual: 1</p>
-    <p id="dificuldade-atual">Dificuldade Atual: Fácil</p>
-  </div>
+    <div class="carta">
+        <img src="foto.jpeg" alt="Estádio do Maracanã">
+        <h1>Estádio do Maracanã</h1>
+        <div class="atributo"><b>Capacidade:</b> 78.838</div>
+        <div class="atributo"><b>Inauguração:</b> 1950</div>
+        <div class="atributo"><b>Cidade:</b> Rio de Janeiro</div>
+        <div class="atributo"><b>Apelido:</b> O Templo do Futebol</div>
+    </div>
 </body>
 </html>
-```
