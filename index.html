@@ -1,126 +1,13 @@
-html
-<!-- index.html -->
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meu Super Trunfo</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="estyles.css">
 </head>
 <body>
   <div id="carta"></div>
   <script src="jogo.js"></script>
 </body>
 </html>
-
-
-javascript
-// jogo.js
-
-let cartas = [];
-let jogador = {};
-let computador = {};
-
-function inicializarJogo() {
-  cartas.push(new Carta("Rei", "Coração"));
-  cartas.push(new Carta("Dama", "Paus"));
-}
-
-function sortearCarta() {
-  let cartaSorteada = cartas[Math.floor(Math.random() * cartas.length)];
-  return cartaSorteada;
-}
-
-function verificarVencedor(cartaJogada, cartaComputador) {
-  if (cartaJogada.valor > cartaComputador.valor) {
-    return true; // Jogador venceu
-  } else {
-    return false; // Jogador perdeu
-  }
-}
-
-function renderizarCartas(cartas) {
-  let cartaElement = document.getElementById("carta");
-  cartaElement.textContent = cartas[0].nome;
-}
-
-inicializarJogo();
-let cartaSorteada = sortearCarta();
-renderizarCartas([cartaSorteada]);
-
-
-Espero que isso ajude! Se você tiver alguma dúvida ou precisar de mais ajuda, sinta-se à vontade para perguntar.
-
->>> manda pra os codigos pra mim poder copiar e colar 
-Aqui estão os códigos que eu mencionei anteriormente:
-
-index.html
-html
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu Super Trunfo</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div id="carta"></div>
-  <script src="jogo.js"></script>
-</body>
-</html>
-```
-
-game.js
-javascript
-let cartas = [];
-let jogador = {};
-let computador = {};
-
-function inicializarJogo() {
-  cartas.push(new Carta("Rei", "Coração"));
-  cartas.push(new Carta("Dama", "Paus"));
-}
-
-function sortearCarta() {
-  let cartaSorteada = cartas[Math.floor(Math.random() * cartas.length)];
-  return cartaSorteada;
-}
-
-function verificarVencedor(cartaJogada, cartaComputador) {
-  if (cartaJogada.valor > cartaComputador.valor) {
-    return true; // Jogador venceu
-  } else {
-    return false; // Jogador perdeu
-  }
-}
-
-function renderizarCartas(cartas) {
-  let cartaElement = document.getElementById("carta");
-  cartaElement.textContent = cartas[0].nome;
-}
-
-inicializarJogo();
-let cartaSorteada = sortearCarta();
-renderizarCartas([cartaSorteada]);
-
-
-Carta.js
-javascript
-class Carta {
-  constructor(nome, valor) {
-    this.nome = nome;
-    this.valor = valor;
-  }
-}
-
-
-styles.css
-css
-#carta {
-  font-size: 24px;
-  text-align: center;
-}
-
