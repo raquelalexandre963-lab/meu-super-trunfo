@@ -1,7 +1,7 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #1a1a2e;
+    background: #0d1117;
     color: white;
+    font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,10 +10,9 @@ body {
 }
 
 #carta {
-    background-color: #16213e;
-    border: 3px solid #e94560;
-    border-radius: 10px;
+    background: #161b22;
     padding: 40px;
+    border-radius: 12px;
+    border: 1px solid #30363d;
     font-size: 24px;
-    text-align: center;
 }
