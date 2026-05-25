@@ -1,13 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Super Trunfo</title>
-    <link rel="estilesheet" href="estilos.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Super Trunfo</title>
+  <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-    <div id="carta"></div>
-    <script src="jogo.js"></script>
+  <h1>Super Trunfo</h1>
+  
+  <div class="placar">
+    <span>Você: <span id="pontos-jogador">0</span></span>
+    <span>CPU: <span id="pontos-cpu">0</span></span>
+  </div>
+
+  <div class="mesa">
+    <div class="carta" id="carta-jogador">
+      <h2 id="nome-jogador">Sua Carta</h2>
+      <div class="atributo" onclick="jogar('velocidade')">
+        Velocidade: <span id="vel-jogador">0</span>
+      </div>
+      <div class="atributo" onclick="jogar('potencia')">
+        Potência: <span id="pot-jogador">0</span>cv
+      </div>
+      <div class="atributo" onclick="jogar('peso')">
+        Peso: <span id="peso-jogador">0</span>kg
+      </div>
+    </div>
+    
+    <div class="carta" id="carta-cpu">
+      <h2 id="nome-cpu">Carta CPU</h2>
+      <div class="atributo">Velocidade: <span id="vel-cpu">???</span></div>
+      <div class="atributo">Potência: <span id="pot-cpu">???</span>cv</div>
+      <div class="atributo">Peso: <span id="peso-cpu">???</span>kg</div>
+    </div>
+  </div>
+
+  <div id="resultado"></div>
+  <button onclick="novaRodada()">Nova Rodada</button>
+
+  <script src="jogo.js"></script>
 </body>
 </html>
